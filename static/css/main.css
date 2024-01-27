@@ -1,0 +1,61 @@
+body {
+	margin: 17px;
+	font-family: consolas;
+	font-size: 17px;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	font-family: consolas;
+	
+}
+
+th {
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;	
+	font-family: consolas;
+}
+
+td {
+	padding: 10px;
+	text-align: left;
+	vertical-align: middle;	
+	font-family: consolas;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.form-container {
+	display: grid;
+	align-items: center;
+	min-height: 70vh;
+	width: 100%;
+}
+
+form {
+	display: grid;
+	width: 75%;
+	min-height: 45vh;
+	margin: auto;
+	padding: 0;
+	min-height: 25vh;
+}
+
+input {
+	height: 50px;
+}
+
+input::placeholder {
+	text-align: center;
+	font-weight: bold;
+	color: red;
+}
+
+textarea {
+	height: 250px;
+}

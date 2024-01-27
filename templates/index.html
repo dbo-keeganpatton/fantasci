@@ -1,0 +1,33 @@
+<!--
+	This Template is the main landing page of the app. Where a User can write a story 
+	and navigate to other pages.
+-->
+
+{% extends 'base.html' %}
+
+{% block head %}
+<title> FantaSci </title>
+{% endblock %}
+
+
+{% block body %}
+<div class="content">
+	
+	<h1 style="text-align: center;">Welcome to FantaSci!</h1>
+	<h4 style="text-align: center;"> Hello Traveler! Have a seat and tell us your story...</h4>
+	
+	<a href="/story_db/" class="button">View Stories<a/>
+	
+	<!-- This is the central form a User can use to write stories -->
+	<div class="form-container">
+		<form action="/" method="POST">
+			<input type="text" name="title" id="title" placeholder="What is the name of this Story??">
+			<textarea type="text" name="content" id="content" placeholder="The Story goes...">
+			</textarea>
+			<input type="submit" value="Tell Story">
+		</form>
+	</div>
+	
+</div>
+{% endblock %}
+

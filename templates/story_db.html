@@ -1,0 +1,52 @@
+<!--
+	This template is where Users can look at existing stories, choose to update
+	delete or navigate to other areas of the app.
+-->
+
+{% extends 'base.html' %}
+
+{% block head %}
+<title> FantaSci/Compendium </title>
+{% endblock %}
+
+
+{% block body %}
+<div class="content">
+	<h1 style="text-align: center;">FantaSci Compendium</h1>
+
+	<!-- If there are no Stories yet, this prompts the user to return to Index.html -->
+	{% if stories|length < 1 %}
+	
+	<h4 style="text-align: center;"> It is a quiet night,  <a href="/">Return to the Bar and Tell us a Story</a></h4>
+	{% else %}
+	<a href="/" class="button">Return to the Bar</a>
+
+	<table class="center">
+		<tr>
+			<th>Title</th>
+			<th>Story</th>
+			<th>Updated</th>
+			<th>Action</th>
+		</tr>
+		
+		{%for story in stories %}
+		<tr>
+			<td><a href="{{ url_for('view_story', id=story.id) }}">{{ story.title }}</a></td>
+			<td>{{ story.content }}</td>
+			<td>{{ story.date_created.date() }}</td>
+			<td>
+				<!-- This invokes the delete and update functions from main.py as well as Update.html templates -->		
+		
+				<a href="/delete/{{ story.id }}">Delete</a>
+				<br>
+				<a href="/update/{{ story.id }}">Update</a>
+			</td>
+		</tr>  
+		{% endfor %}
+	
+	</table>
+	
+	{% endif %}
+	
+</div>
+{% endblock %}

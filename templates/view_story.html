@@ -1,0 +1,39 @@
+<!-- 
+	This Template is for when a User is viewing a story to be read.
+-->
+
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title> FantaSci/{{story.title}} </title>
+{% endblock %}
+
+
+{% block body %}
+<div class="content">
+	
+	<h1 style="text-align: center;">{{ story.title }}</h1>
+	
+
+	<!-- Routing Buttons -->
+	<div>
+		<a href="/" class="button">Return To The Bar</a>
+	</div>
+	<div>
+		<a href="/story_db/" class="button">Return To Stories</a>
+	</div>
+
+
+	<!-- Story Body and Title -->
+	<table class="center">
+		<tr>
+			<th>Story</th>
+		</tr>			
+		<tr>
+			<td>{{ story.content }}</td>
+		</tr>  
+	</table>
+</div>
+{% endblock %}
+
