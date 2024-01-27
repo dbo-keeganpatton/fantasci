@@ -1,0 +1,5 @@
+# Ignore Databases
+*.db
+
+# Ignore Secrets
+.json
