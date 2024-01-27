@@ -11,6 +11,6 @@ fantasci/
 | | |-- templates/story_db.html 		# Story Repository \
 | | |-- templates/view_story.html 	    # Story Reading Page \
 | | |-- templates/update.html			# Story Edit Page \
-| | |-- templates/base.html				# base reference format \
+| | |-- templates/base.html				# base reference format 
 
 
