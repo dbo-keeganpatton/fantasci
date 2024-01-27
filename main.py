@@ -30,9 +30,9 @@ def index():
         try:
             db.session.add(add_story)
             db.session.commit()
-            return redirect('/')
-        except Exception as e:
-            return str(e)
+            return redirect('/story_db/')
+        except:
+            "Something is Wrong..."
 
     else:
         stories = NewStory.query.order_by(NewStory.date_created).all()
@@ -48,9 +48,9 @@ def delete(id):
     try:
         db.session.delete(story_to_delete)
         db.session.commit()
-        return redirect('/')
-    except Exception as e:
-        return str(e)
+        return redirect('/story_db/')
+    except:
+        "Something is Wrong..."
 
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -65,9 +65,9 @@ def update(id):
         
         try:
             db.session.commit()
-            return redirect('/')
-        except Exception as e:
-            return str(e)
+            return redirect('/story_db/')
+        except:
+            "Something is wrong..."
    
     else:
         return render_template('update.html', story=story)

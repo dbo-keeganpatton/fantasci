@@ -1,16 +1,16 @@
+<!--
+	This template allows the User to Update current stories in the database
+-->
 {% extends 'base.html' %}
 
 {% block head %}
-
 <title> FantaSci </title>
-
 {% endblock %}
 
-{% block body %}
 
+{% block body %}
 <div class="content">
 	<h1 style="text-align: center;">Update Story</h1>
-
 	
 	<div class="form-container">
 		<form action="/update/{{ story.id }}" method="POST">
@@ -21,6 +21,5 @@
 	</div>
 	
 </div>
-
 {% endblock %}
 
