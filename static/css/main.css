@@ -1,8 +1,27 @@
 body {
+	/* 
+	background: url();	
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	*/
 	margin: 17px;
 	font-family: consolas;
 	font-size: 17px;
 }
+
+h1 {
+	font-size: 40px;
+    color: black;
+    text-align: center;
+}
+
+h4 {
+	font-size: 24px;
+
+}
+
 
 table, th, td {
 	border: 1px solid black;
