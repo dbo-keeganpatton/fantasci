@@ -1,15 +1,22 @@
 from flask import Flask, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 from datetime import datetime
 
+## Next Step is Login!!
+
+# Just the basic setup stuff
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
+login_manager = LoginManager()
 
 
+# This is my DB Schema for added user added content.
 class NewStory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False) 
+    genre = db.Column(db.String(200), nullable=True)
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -25,7 +32,8 @@ def index():
         
         story_title = request.form['title']
         story_content = request.form['content']
-        add_story = NewStory(title=story_title, content=story_content)
+        story_genre = request.form['genre']
+        add_story = NewStory(title=story_title, content=story_content, genre=story_genre)
 
         try:
             db.session.add(add_story)
@@ -61,6 +69,7 @@ def update(id):
 
     if request.method == 'POST':
         story.title = request.form['title']
+        story.genre = request.form['genre']
         story.content = request.form['content']
         
         try:
@@ -81,12 +90,21 @@ def view_story(id):
     return render_template('view_story.html', story=story)
 
 
-@app.route('/story_db/', methods=['GET'])
+@app.route('/story_db/', methods=['GET', 'POST'])
 def story_db():
     '''View Created Stories'''
     
     stories = NewStory.query.order_by(NewStory.date_created).all()
-    return render_template('story_db.html', stories=stories)
+    
+    #### This helps create a genre dropdown filter for the db template ####
+    unique_genres = set(story.genre for story in stories)
+    if request.method == "POST":
+        select_genre = request.form.get('Genre')
+        if select_genre and select_genre != 'ALL':
+            stories = [story for story in stories if story.genre == select_genre]
+
+
+    return render_template('story_db.html', stories=stories, unique_genres=unique_genres)
 
 
 if __name__ == "__main__":

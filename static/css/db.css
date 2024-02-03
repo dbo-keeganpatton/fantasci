@@ -1,0 +1,32 @@
+body {
+	margin: 17px;
+	font-family: consolas;
+	font-size: 17px;
+}
+
+h1 {
+	font-size: 40px;
+    color: black;
+    text-align: center;
+}
+
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	font-family: consolas;
+	text-align: center;
+	vertical-align: middle;	
+	padding: 10px;
+}
+
+td {
+	padding: 10px;
+	text-align: left;
+	vertical-align: middle;	
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+

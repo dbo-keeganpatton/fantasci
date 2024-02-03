@@ -3,7 +3,7 @@
 	delete or navigate to other areas of the app.
 -->
 
-{% extends 'base.html' %}
+{% extends 'base_db.html' %}
 
 {% block head %}
 <title> FantaSci/Compendium </title>
@@ -21,10 +21,27 @@
 	{% else %}
 	<a href="/" class="button">Return to the Bar</a>
 
+	
+	<!-- This is just for a Genre filter Dropdown -->
+	<div style = "position:relative; left:1px; top:2px;">
+	<form method="POST">	
+		<select name="Genre">
+			<option value="ALL">All Genres</option>
+
+			{% for genre in unique_genres %}
+			<option value="{{ genre }}">{{ genre }}</option>
+			{% endfor %}
+		
+		</select>
+		<button type="submit">Filter</button>
+	</form>
+    </div>
+	
+
 	<table class="center">
 		<tr>
 			<th>Title</th>
-			<th>Story</th>
+			<th>Genre</th>
 			<th>Updated</th>
 			<th>Action</th>
 		</tr>
@@ -32,7 +49,7 @@
 		{%for story in stories %}
 		<tr>
 			<td><a href="{{ url_for('view_story', id=story.id) }}">{{ story.title }}</a></td>
-			<td>{{ story.content }}</td>
+			<td>{{story.genre}}</td>
 			<td>{{ story.date_created.date() }}</td>
 			<td>
 				<!-- This invokes the delete and update functions from main.py as well as Update.html templates -->		
