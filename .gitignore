@@ -2,4 +2,4 @@
 *.db
 
 # Ignore Secrets
-.json
+*.json
