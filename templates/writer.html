@@ -1,0 +1,61 @@
+<!--
+	This is the User content creation page where users
+	can write stories.
+-->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/writer.css') }}">
+
+
+{% block head %}
+<title> FantaSci </title>
+{% endblock %}
+
+{% block body %}
+
+<!-- If you are signed in Show Welcome otherwise prompt login -->
+{% if current_user.is_authenticated %}
+
+	<a href="/logout/" class="button">Logout</a><br>
+	<div style = "text-align: center;">
+		<em style = "color: #636d83; font-size: 22px; font-family: sans-serif;"> 
+			Welcome, {{ current_user.username }}!
+		</em>
+		<br>
+	</div>
+
+{% else %}
+
+	<div style= "text-align: center;">
+		<em style = "color: #FD9891; font-size: 22px; font-family: sans-serif" >Not Logged In</em>
+	</div>
+	<a href="/login/" class="button">Login</a><br>
+	<a href="/register/" class="button">Create Account</a><br>
+
+{% endif %}
+
+
+<!-- Main Form area -->
+<div style = "text-align: center;">
+
+	<h4> Hello Traveler! Have a seat and tell us your story...</h4>
+
+	<!-- This is the central form a User can use to write stories -->
+	<a href="/story_db/" class="view_stories">View Stories</a>
+	<br><br>
+	
+	<form action="/writer/" method="POST">
+		
+		<input class="form_input_title" type="text" name="title" id="title" placeholder="Title">
+		<input class="form_input" type="text" name="genre" id="genre" placeholder="Genre">
+		
+		<!-- This is where users write -->
+		<div class= "text_form">
+		<textarea type="text" name="content" id="content" placeholder="The Story goes..."></textarea>
+		</div>
+		<input class="submit_story" type="submit" value="Tell Story">
+	
+	</form>
+
+</div>
+
+{% endblock %}
+

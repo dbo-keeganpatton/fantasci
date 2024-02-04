@@ -121,8 +121,18 @@ def logout():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    '''Initialize Story Posts'''
+    '''Landing Page / Mission Statement'''
 
+    return render_template('index.html', current_user=current_user)
+
+
+###################################################
+#               Author Canvas GUI                 #
+###################################################
+
+@app.route('/writer/', methods=['GET', 'POST'])
+def writer():
+    '''GUI where users can Auther and contribute to Stories'''
     if request.method == 'POST':
         
         story_title = request.form['title']
@@ -139,7 +149,7 @@ def index():
 
     else:
         stories = NewStory.query.order_by(NewStory.date_created).all()
-        return render_template('index.html', stories=stories, current_user=current_user)
+        return render_template('writer.html', stories=stories, current_user=current_user)
 
 
 ###################################################

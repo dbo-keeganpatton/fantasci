@@ -1,47 +1,63 @@
 <!--
-	This Template is the main landing page of the app. Where a User can write a story 
-	and navigate to other pages.
+	This Template is the main landing page of the app. 
 -->
 
-{% extends 'base.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
-{% block head %}
 <title> FantaSci </title>
-{% endblock %}
-
 
 {% block body %}
-
-{% if current_user.is_authenticated %}
-<div>Welcome, {{ current_user.username }}!</div>
-	<a href="/logout/" class="button">Logout User</a><br>
-{% else %}
-<div>Not Logged In</div>
-{% endif %}
-
-<div class="content">
+	{% if current_user.is_authenticated %}
 	
-	<h1 style="text-align: center; color: black">Welcome to FantaSci!</h1>
-	<h4 style="text-align: center; color: black"> Hello Traveler! Have a seat and tell us your story...</h4>
-		
-	<a href="/story_db/" class="button">View Stories</a><br>
-	<a href="/login/" class="button">Login</a><br>	
-	<a href="/register/" class="button">Create Account</a><br>
+	<div style= "text-align: center;">
+		<em style = "color: #636d83; font-size: 22px; font-family: sans-serif;" >
+			Welcome, {{ current_user.username }}!
+		</em>
+		</div>
+		<a href="/logout/" class="button">Logout User</a><br>
+		<h1>Welcome to FantaSci!</h1>
 
+	{% else %}
 
-	<!-- This is the central form a User can use to write stories -->
-	<div class="form-container">
-		<form action="/" method="POST">
-			<input type="text" name="title" id="title" placeholder="What is the name of this Story?">
-			<input type="text" name="genre" id="genre" placeholder="What Type of Story is this?">
-			<textarea type="text" name="content" id="content" placeholder="The Story goes...">
-			</textarea>
-			<input type="submit" value="Tell Story">
-		</form>
+	<div style= "text-align: center;">
+		<em style = "color: #BB86FC; font-size: 22px; font-family: sans-serif" >Not Logged In</em><br>
+	</div>
+		<a href="/login/" class="button">Login</a><br>	
+		<a href="/register/" class="button">Create Account</a><br>
+		<h1>Welcome to FantaSci!</h1>
+	
+	{% endif %}
+	
+	
+	<h4>"Empowering Storytelling through Open Collaboration"</h4>
+	
+	<div class="center-container">
+		<p>
+		 Fantasci aims to change the way we tell stories, 
+		 We believe collective creativity is the cornerstone 
+		 for innovation.
+		 <br><br> 
+		 Dedicated to authors who aspire to transform the way stories 
+		 are told, we wish to provide a free, open source environment, 
+		 that encourages writers to collaborate, share and 
+		 enhance each other's work.
+		 <br><br> 
+		 We are committed to fostering an inclusive and dynamic community 
+		 where the boundaries of fiction are limitless, 
+		 and diverse voices are amplified. 
+		 <br><br>
+		 Create a new paradigm in storytelling that is richer, 
+		 more interconnected, and endlessly imaginative.
+		</p>
 	</div>
 	
-</div>
+	<br><br>
 
+	<div style = "text-align: center;">
+		<a href="/story_db/" class="view_stories">View Stories</a>
+		<br><br><br>
+		<a href="/writer/" class="view_stories">Tell a Story</a>
+	</div>
 
 {% endblock %}
 
