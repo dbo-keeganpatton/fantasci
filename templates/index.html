@@ -11,6 +11,14 @@
 
 
 {% block body %}
+
+{% if current_user.is_authenticated %}
+<div>Welcome, {{ current_user.username }}!</div>
+	<a href="/logout/" class="button">Logout User</a><br>
+{% else %}
+<div>Not Logged In</div>
+{% endif %}
+
 <div class="content">
 	
 	<h1 style="text-align: center; color: black">Welcome to FantaSci!</h1>
@@ -33,5 +41,7 @@
 	</div>
 	
 </div>
+
+
 {% endblock %}
 

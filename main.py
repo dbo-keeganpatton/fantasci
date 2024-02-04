@@ -139,7 +139,7 @@ def index():
 
     else:
         stories = NewStory.query.order_by(NewStory.date_created).all()
-        return render_template('index.html', stories=stories)
+        return render_template('index.html', stories=stories, current_user=current_user)
 
 
 ###################################################
@@ -160,7 +160,7 @@ def story_db():
             stories = [story for story in stories if story.genre == select_genre]
 
 
-    return render_template('story_db.html', stories=stories, unique_genres=unique_genres)
+    return render_template('story_db.html', stories=stories, unique_genres=unique_genres, current_user=current_user)
 
 
 @app.route('/delete/<int:id>')
@@ -195,7 +195,7 @@ def update(id):
             "Something is wrong..."
    
     else:
-        return render_template('update.html', story=story)
+        return render_template('update.html', story=story, current_user=current_user)
 
 
 @app.route('/viewstory/<int:id>', methods=['GET'])
@@ -203,7 +203,7 @@ def view_story(id):
     '''Hyperlink to Select Story'''
     
     story = NewStory.query.get_or_404(id)
-    return render_template('view_story.html', story=story)
+    return render_template('view_story.html', story=story, current_user=current_user)
 
 
 ###################################################

@@ -11,8 +11,17 @@
 
 
 {% block body %}
+
+{% if current_user.is_authenticated %}
+<div>Welcome, {{ current_user.username }}!</div>
+	<a href="/logout/" class="button">Logout User</a><br>
+{% else %}
+<div>Not Logged In</div>
+{% endif %}
+
+
 <div class="content">
-	<h1 style="text-align: center;">FantaSci Compendium</h1>
+	<h1 style="text-align: center;">FantaSci Compendium</h1><br>
 
 	<!-- If there are no Stories yet, this prompts the user to return to Index.html -->
 	{% if stories|length < 1 %}
