@@ -3,3 +3,6 @@
 
 # Ignore Secrets
 *.json
+
+# Ignore PNG
+*.png
