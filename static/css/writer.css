@@ -104,3 +104,7 @@ textarea:focus {
 	background-color: #2A2A3B;	
 }
 
+.return-to-bar {
+	/* hyperlink to return to index */
+	color: #FD9891;
+}

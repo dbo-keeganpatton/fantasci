@@ -2,8 +2,7 @@
 	This template is where Users can look at existing stories, choose to update
 	delete or navigate to other areas of the app.
 -->
-
-{% extends 'base_db.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/story_db.css') }}">
 
 {% block head %}
 <title> FantaSci/Compendium </title>
@@ -13,10 +12,25 @@
 {% block body %}
 
 {% if current_user.is_authenticated %}
-<div>Welcome, {{ current_user.username }}!</div>
-	<a href="/logout/" class="button">Logout User</a><br>
+
+	<a href="/logout/" class="button">Logout</a><br>	
+	<a href="/" class="return-to-bar">Return to the Bar</a>
+	<div style = "text-align: center;">
+		<em style = "color: #636d83; font-size: 22px; font-family: sans-serif;"> 
+			Hello, {{ current_user.username }}!
+		</em>
+		<br>
+	</div>
+
 {% else %}
-<div>Not Logged In</div>
+
+	<div style= "text-align: center;">
+			<em style = "color: #BB86FC; font-size: 22px; font-family: sans-serif" >Not Logged In</em>
+		</div>
+		<a href="/login/" class="button">Login</a><br>
+		<a href="/register/" class="button">Create Account</a><br>
+		<a href="/" class="return-to-bar">Return to the Bar</a>
+
 {% endif %}
 
 
@@ -27,14 +41,15 @@
 	{% if stories|length < 1 %}
 	
 	<h4 style="text-align: center;"> It is a quiet night,  <a href="/">Return to the Bar and Tell us a Story</a></h4>
+	
 	{% else %}
-	<a href="/" class="button">Return to the Bar</a>
+	
 
 	
 	<!-- This is just for a Genre filter Dropdown -->
-	<div style = "position:relative; left:1px; top:2px;">
+	<div class = "form-cont">
 	<form method="POST">	
-		<select name="Genre">
+		<select class="form-input" name="Genre">
 			<option value="ALL">All Genres</option>
 
 			{% for genre in unique_genres %}
@@ -42,12 +57,12 @@
 			{% endfor %}
 		
 		</select>
-		<button type="submit">Filter</button>
+		<button class="form-input" type="submit">Filter</button>
 	</form>
     </div>
 	
-
-	<table class="center">
+	
+	<table class="center-table">
 		<tr>
 			<th>Title</th>
 			<th>Genre</th>
