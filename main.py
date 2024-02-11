@@ -1,17 +1,22 @@
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from flask_wtf.recaptcha import validators
+from flask_migrate import Migrate
+from sqlalchemy import ForeignKeyConstraint
+from sqlalchemy.orm import backref
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import json
 
+
 # Retrieve Auth Secret
 with open('secret.json', 'r') as file:
     secret = json.load(file)
+
 
 # Just the basic setup stuff
 app = Flask(__name__)
@@ -29,9 +34,20 @@ login_manager.login_view = "login"
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 ###################################################
 #               Database Schemas                  #
 ###################################################
+
+migrate = Migrate(app, db)
+
+""" 
+Migrate for running Database Migrations when Schemas Change
+run the following commands in terminal when this is neccesary
+    |-- flask db init
+    ||-- flask db upgrade -m 'some message'
+    |||-- flask db upgrade
+""" 
 
 
 class NewStory(db.Model):
@@ -40,9 +56,37 @@ class NewStory(db.Model):
     genre = db.Column(db.String(200), nullable=True)
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    current_version_id = db.Column(db.Integer, db.ForeignKey('new_version.id'), nullable=True)
+
+    # Relationships
+    __table_args__ = (
+        ForeignKeyConstraint(['author_id'], ['user.id'], name='fk_new_story_author_id'),
+        ForeignKeyConstraint(['current_version_id'], ['new_version.id'], name='fk_new_story_current_version_id')
+    )
+
+    current_version = db.relationship('NewVersion', foreign_keys=[current_version_id], post_update=True)
+    versions = db.relationship('NewVersion', backref='story', lazy=True, foreign_keys='NewVersion.story_id')
+
     def __repr__(self):
         return '<new_story %r>' % self.id
+
+
+class NewVersion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    story_id = db.Column(db.Integer, db.ForeignKey('new_story.id'), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    # Relationships
+    __table_args__ = (
+        ForeignKeyConstraint(['story_id'], ['new_story.id'], name='fk_new_version_story_id'),
+        ForeignKeyConstraint(['author_id'], ['user.id'], name='fk_new_version_author_id')
+    )
+
+    def __repr__(self):
+        return '<new_version %r>' % self.id
 
 
 class User(db.Model, UserMixin):
@@ -138,14 +182,17 @@ def writer():
         story_title = request.form['title']
         story_content = request.form['content']
         story_genre = request.form['genre']
-        add_story = NewStory(title=story_title, content=story_content, genre=story_genre)
+        author_id = current_user.id
+        add_story = NewStory(title=story_title, content=story_content, genre=story_genre, author_id=author_id)
 
         try:
             db.session.add(add_story)
             db.session.commit()
             return redirect('/story_db/')
-        except:
-            "Something is Wrong..."
+        except Exception as e:
+            db.session.rollback()
+            flash("Something is Wrong..." + str(e))
+            return redirect('/writer/')
 
     else:
         stories = NewStory.query.order_by(NewStory.date_created).all()
@@ -220,7 +267,6 @@ def view_story(id):
 #                     END APP                     # 
 ###################################################
 
+# add with app.app_context(): db.create_all() if needed.
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)

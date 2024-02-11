@@ -24,40 +24,53 @@
 	</div>
 
 {% else %}
-
-	<div style= "text-align: center;">
-		<em style = "color: #BB86FC; font-size: 22px; font-family: sans-serif" >Not Logged In</em>
-	</div>
-	<a href="/login/" class="button">Login</a><br>
-	<a href="/register/" class="button">Create Account</a><br>
-	<a href="/" class="return-to-bar">Return to the Bar</a>
+	
+	<!-- Placeholder since I deal with non login later -->	
 
 {% endif %}
 
 
-<!-- Main Form area -->
-<div style = "text-align: center;">
+{% if current_user.is_authenticated %}
 
-	<h4> Hello Traveler! Have a seat and tell us your story...</h4>
+	<!-- Main Form area -->
+	<div style = "text-align: center;">
 
-	<!-- This is the central form a User can use to write stories -->
-	<a href="/story_db/" class="view_stories">View Stories</a>
-	<br><br>
-	
-	<form action="/writer/" method="POST">
+		<h4> Hello Traveler! Have a seat and tell us your story...</h4>
+
+		<!-- This is the central form a User can use to write stories -->
+		<a href="/story_db/" class="view_stories">View Stories</a>
+		<br><br>
 		
-		<input class="form_input_title" type="text" name="title" id="title" placeholder="Title">
-		<input class="form_input" type="text" name="genre" id="genre" placeholder="Genre">
+		<form action="/writer/" method="POST">
+			
+			<input class="form_input_title" type="text" name="title" id="title" placeholder="Title">
+			<input class="form_input" type="text" name="genre" id="genre" placeholder="Genre">
+			
+			<!-- This is where users write -->
+			<div class= "text_form">
+			<textarea name="content" id="content" placeholder="The Story goes..."></textarea>
+			</div>
+			<input class="submit_story" type="submit" value="Tell Story">
 		
-		<!-- This is where users write -->
-		<div class= "text_form">
-		<textarea type="text" name="content" id="content" placeholder="The Story goes..."></textarea>
-		</div>
-		<input class="submit_story" type="submit" value="Tell Story">
-	
-	</form>
+		</form>
 
-</div>
+	</div>
+
+{% else %}
+
+	<!-- Main Form area -->
+	<div style = "text-align: center;">
+
+		<h4> Let us know who you are before you tell us a story...</h4>
+
+		<!-- This is the central form a User can use to write stories -->
+		<a href="/login/" class="button">Login</a><br>
+		<a href="/register/" class="button">Create Account</a><br>
+		<a href="/" class="return-to-bar">Return to the Bar</a>
+
+	</div>
+
+{% endif %}
 
 {% endblock %}
 
