@@ -2,10 +2,11 @@
 	New User Sign up Page Template
 -->
 
-{% extends 'base.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css')}}">
+
 
 {% block head %}
-<title> Welcome to Fantasci </title>
+<title> Create Account </title>
 {% endblock %}
 
 {% block body %}
@@ -13,10 +14,10 @@
 <body>
 
 	<a href="/login" class="button">Already a member? Login Here</a><br>
+	<a href="/" class="return-to-bar">Return to the Bar</a>
+	<h1>Welcome in! Who are You!</h1>
 
-	<h1>Create Login</h1>
-
-	<form method="POST" action="">
+	<form method="POST" action="" class="form-cont">
 		{{ form.hidden_tag() }}
 		{{ form.username }}
 		{{ form.password }}

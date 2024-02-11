@@ -2,10 +2,10 @@
 	Login Page Template
 -->
 
-{% extends 'base.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 
 {% block head %}
-<title> Welcome to Fantasci </title>
+<title> Login </title>
 {% endblock %}
 
 {% block body %}
@@ -13,17 +13,18 @@
 <body>
 	
 	<a href="/register/" class="button">No Account? Sign up here!!</a><br>
-
-	<h1>Provide Login</h1>
-
-	<form method="POST" action="">
+	<a href="/" class="return-to-bar">Return to the Bar</a>
+	
+	<h1>Welcome back! Sorry We are terrible with Names..</h1>
+	<br><br>
+	<form method="POST" action="" class= "form-cont">
 		{{ form.hidden_tag() }}
 		{{ form.username }}
 		{{ form.password }}
 		{{ form.submit }}
 	</form>
 
-
 </body>
 
 {% endblock %}
+

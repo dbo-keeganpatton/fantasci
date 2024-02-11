@@ -72,7 +72,7 @@
 		
 		{%for story in stories %}
 		<tr>
-			<td><a href="{{ url_for('view_story', id=story.id) }}">{{ story.title }}</a></td>
+			<td><a href="{{ url_for('view_story', id=story.id) }}" class="story-link">{{ story.title }}</a></td>
 			<td>{{story.genre}}</td>
 			<td>{{ story.date_created.date() }}</td>
 			<td>

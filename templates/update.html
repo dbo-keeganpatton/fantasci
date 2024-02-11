@@ -1,7 +1,7 @@
 <!--
 	This template allows the User to Update current stories in the database
 -->
-{% extends 'base.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/update.css') }}">
 
 {% block head %}
 <title> FantaSci </title>
@@ -9,16 +9,20 @@
 
 
 {% block body %}
-<div class="content">
+<div style="text-align: center;">
 	<h1 style="text-align: center;">Update Story</h1>
 	
-	<div class="form-container">
+	<div>
 		<form action="/update/{{ story.id }}" method="POST">
-			<input type="text" name="title" title="Story Name" id="title" value="{{ story.title }}">
-			<input type="text" name="genre" title="Update Genre" id="genre" value="{{ story.genre }}">
-			<textarea type="text" name="content" title="Change Story" id="content" value="{{ story.content }}">
-			</textarea>
-			<input type="submit" value="Update">
+			<input class="form_input_title" type="text" name="title" title="Story Name" id="title" value="{{ story.title }}">
+			<input class="form_input" type="text" name="genre" title="Update Genre" id="genre" value="{{ story.genre }}">
+			
+			<div class="text_form">
+			<textarea type="text" name="content" title="Change Story" id="content" value="{{ story.content }}"></textarea>
+			</div>
+			
+			<input class="submit_story" type="submit" value="Update">
+			<a href="/story_db/" class="submit_story">Cancel</a>
 		</form>
 	</div>
 	
