@@ -14,6 +14,10 @@
 	
 	<div>
 		<form action="/update/{{ story.id }}" method="POST">
+			
+			<!-- This hidden input is critical for versioning when edits are made -->
+			<input type="hidden" name="story_id" value="{{ story.id }}">
+
 			<input class="form_input_title" type="text" name="title" title="Story Name" id="title" value="{{ story.title }}">
 			<input class="form_input" type="text" name="genre" title="Update Genre" id="genre" value="{{ story.genre }}">
 			

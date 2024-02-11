@@ -1,0 +1,38 @@
+<!--
+	This template is where Users can look at existing stories, choose to update
+	delete or navigate to other areas of the app.
+-->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/versions.css') }}">
+
+{% block head %}
+<title> Changelog </title>
+{% endblock %}
+
+
+{% block body %}
+
+	<a href="/logout/" class="button">Logout</a><br>	
+	<a href="/" class="return-to-bar">Return to the Bar</a>
+
+<div class="content">
+	<h1 style="text-align: center;">{{ story.title }}: <br> Version History</h1><br>
+	
+	<table class="center-table">
+		<tr>
+			<th>Version</th>
+			<th>Updated</th>
+			<th>Updated By</th>
+		</tr>
+		
+		{%for version in versions %}
+		<tr>
+			<td><a href="{{ url_for('read_version', version_id=version.id) }}" class="story-link">{{ loop.index }}</a></td>
+			<td>{{ version.date_created.date() }}</td>
+			<td>{{ version.author.username }}</td>
+		</tr>  
+		{% endfor %}
+	</table>
+	
+</div>
+
+{% endblock %}

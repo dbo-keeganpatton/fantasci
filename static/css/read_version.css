@@ -1,0 +1,57 @@
+body {
+	background: #12121F;
+	margin: 17px;
+	font-size: 20px;
+}
+
+h1 {
+	font-size: 24px;
+	color: #B3DF72;
+	text-align: center;
+	font-family: sans-serif;
+}
+
+a {
+	color: #636d83;
+	font-size: 18px;
+	font-family: sans-serif;
+	text-decoration: none;
+}
+
+
+.center-table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+td {
+	background-color: #1e1e2e;
+	color: white;
+	font-family: sans-serif;
+	font-size: 20px;
+	text-align: center;
+	padding: 10;
+}
+
+th {
+	background-color: #1e1e2e;
+	color: white;
+	font-family: sans-serif;
+	font-size: 20px;
+	text-align: center;
+	padding: 10;
+}
+
+.story-link {
+	/* for hyperlinks in table */
+	color: #BB86FC;
+	font-size: 24px;
+}	
+
+.return-to-bar {
+	/* hyperlink to return to index */
+	color: #FD9891;
+}
+
+

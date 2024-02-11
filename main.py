@@ -84,7 +84,9 @@ class NewVersion(db.Model):
         ForeignKeyConstraint(['story_id'], ['new_story.id'], name='fk_new_version_story_id'),
         ForeignKeyConstraint(['author_id'], ['user.id'], name='fk_new_version_author_id')
     )
-
+    
+    author = db.relationship('User', backref='versions', foreign_keys=[author_id])
+    
     def __repr__(self):
         return '<new_version %r>' % self.id
 
@@ -111,13 +113,11 @@ class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder" : "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder" : "Password"})
     submit = SubmitField("Login")
- 
 
 
 ###################################################
 #                 Login Routes                    #
 ###################################################
-
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -220,6 +220,15 @@ def story_db():
     return render_template('story_db.html', stories=stories, unique_genres=unique_genres, current_user=current_user)
 
 
+@app.route('/read_version/<int:version_id>', methods=['GET'])
+def read_version(version_id):
+    '''Review Version from Version list'''
+
+    version = NewVersion.query.get_or_404(version_id)
+    story = version.story
+    return render_template('read_version.html', version=version, story=story)
+
+
 @app.route('/delete/<int:id>')
 def delete(id):
     '''Delete Posts'''
@@ -241,15 +250,21 @@ def update(id):
     story = NewStory.query.get_or_404(id)
 
     if request.method == 'POST':
-        story.title = request.form['title']
-        story.genre = request.form['genre']
-        story.content = request.form['content']
         
+        new_version = NewVersion(
+            content = request.form['content'],
+            story_id = id,
+            author_id = current_user.id 
+        )
+
         try:
+            db.session.add(new_version)
             db.session.commit()
             return redirect('/story_db/')
-        except:
-            "Something is wrong..."
+        
+        except Exception as e:
+            db.session.rollback()
+            flash(str(e))
    
     else:
         return render_template('update.html', story=story, current_user=current_user)
@@ -261,6 +276,16 @@ def view_story(id):
     
     story = NewStory.query.get_or_404(id)
     return render_template('view_story.html', story=story, current_user=current_user)
+
+
+@app.route('/versions/<int:id>', methods=['GET'])
+def versions(id):
+    '''Version History for Changes to a Story'''
+    
+    story = NewStory.query.get_or_404(id)
+    versions = NewVersion.query.filter_by(story_id=id).order_by(NewVersion.date_created.desc()).all()
+    return render_template('versions.html', story=story, versions=versions, current_user=current_user)
+
 
 
 ###################################################

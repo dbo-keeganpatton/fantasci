@@ -1,0 +1,33 @@
+<!-- 
+	This Template is for when a User is viewing a story to be read.
+-->
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/read_version.css') }}">
+
+{% block head %}
+<title> FantaSci/{{story.title}} </title>
+{% endblock %}
+
+
+{% block body %}
+<div class="content">
+	
+	<!-- Routing Buttons -->
+	<a href="/story_db/" class="button">Return To Stories</a>
+	<br>
+	<a href="/" class="return-to-bar">Return To The Bar</a>
+	
+	<h1 style="text-align: center;">{{ story.title }}</h1>
+	
+
+
+
+	<!-- Story Body and Title -->
+	<table class="center-table">
+		<tr>
+			<td>{{ version.content }}</td>
+		</tr>  
+	</table>
+</div>
+{% endblock %}
+

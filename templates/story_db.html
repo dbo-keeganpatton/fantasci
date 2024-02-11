@@ -80,9 +80,12 @@
 			<td>
 				<!-- This invokes the delete and update functions from main.py as well as Update.html templates -->		
 		
+				<a href="/versions/{{ story.id }}">Versions</a>
+				<br>
 				<a href="/delete/{{ story.id }}">Delete</a>
 				<br>
 				<a href="/update/{{ story.id }}">Update</a>
+			
 			</td>
 		</tr>  
 		{% endfor %}
