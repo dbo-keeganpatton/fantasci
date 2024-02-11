@@ -4,3 +4,6 @@
 # Ignore Secrets
 *.json
 
+# Ignore Pycache and byte-compiled files
+__pycache__/
+*.py[cod]

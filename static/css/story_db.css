@@ -50,7 +50,7 @@ th {
 	padding: 10;
 }
 
-.center-table a {
+.story-link {
 	/* for hyperlinks in table */
 	color: #BB86FC;
 }	
@@ -59,9 +59,6 @@ th {
 	/* hyperlink to return to index */
 	color: #FD9891;
 }
-
-
-
 
 .form-cont {
 	display: flex;
