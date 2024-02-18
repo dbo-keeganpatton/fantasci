@@ -20,7 +20,7 @@
 	- Contribution Point System.
 
 3) __Text Editor UX__
-	- Font Selection for Editing.
-	- Style Customization.
+	- ~~Font Selection for Editing.~~
+	- ~~Style Customization.~~
 	- User Themes.
 	- Intellisense for text.
