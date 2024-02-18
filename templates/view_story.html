@@ -2,11 +2,10 @@
 	This Template is for when a User is viewing a story to be read.
 -->
 
-{% extends 'base.html' %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/read_story.css') }}">
 
 {% block head %}
-<title> FantaSci/{{story.title}} </title>
+<title> StoryBranch/{{story.title}} </title>
 {% endblock %}
 
 
@@ -18,7 +17,7 @@
 
 	<!-- Routing Buttons -->
 	<div>
-		<a href="/" class="button">Return To The Bar</a>
+		<a href="/" class="return-to-bar">Return To The Bar</a>
 	</div>
 	<div>
 		<a href="/story_db/" class="button">Return To Stories</a>
@@ -26,12 +25,12 @@
 
 
 	<!-- Story Body and Title -->
-	<table class="center">
+	<table class="center-table">
 		<tr>
 			<th>Story</th>
 		</tr>			
 		<tr>
-			<td>{{ story.content }}</td>
+			<td>{{ story.content|safe }}</td>
 		</tr>  
 	</table>
 </div>

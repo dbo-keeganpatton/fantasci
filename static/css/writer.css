@@ -108,3 +108,14 @@ textarea:focus {
 	/* hyperlink to return to index */
 	color: #FD9891;
 }
+
+/* These options assist the text editor formatting
+ check text_input.css for expanded styles */
+body .cke_top {
+	background-color: #1e1e2e;
+}
+
+body .cke_bottom {
+	background-color: #1e1e2e;
+}
+

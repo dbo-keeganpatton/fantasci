@@ -6,7 +6,7 @@
 
 
 {% block head %}
-<title> FantaSci </title>
+<title> BranchLibrary </title>
 {% endblock %}
 
 {% block body %}
@@ -32,9 +32,13 @@
 
 {% if current_user.is_authenticated %}
 
+
+<!-- cke editor for rich text experience -->
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+	
 	<!-- Main Form area -->
 	<div style = "text-align: center;">
-
+	
 		<h4> Hello Traveler! Have a seat and tell us your story...</h4>
 
 		<!-- This is the central form a User can use to write stories -->
@@ -49,9 +53,19 @@
 			<!-- This is where users write -->
 			<div class= "text_form">
 			<textarea name="content" id="content" placeholder="The Story goes..."></textarea>
+			
+			<!-- Initialize CKEditor -->
+			<script>CKEDITOR.replace('content', {
+				width: '100%',
+				height: '84%',
+				resize_enabled: false,
+				contentsCss: '{{ url_for("static", filename="css/text_editor.css") }}'
+			});
+			</script>
+
 			</div>
 			<input class="submit_story" type="submit" value="Tell Story">
-		
+			
 		</form>
 
 	</div>

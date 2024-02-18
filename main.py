@@ -11,6 +11,7 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import json
+import bleach
 
 
 # Retrieve Auth Secret
@@ -180,7 +181,16 @@ def writer():
     if request.method == 'POST':
         
         story_title = request.form['title']
-        story_content = request.form['content']
+        
+        # Bleach is used here to clean allowable HTML tags for security.
+        story_content = bleach.clean( 
+            request.form['content'], tags=list(
+                bleach.sanitizer.ALLOWED_TAGS
+            ) + 
+            [ 'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'blockquote' ], 
+            strip=True
+        )
+
         story_genre = request.form['genre']
         author_id = current_user.id
         add_story = NewStory(title=story_title, content=story_content, genre=story_genre, author_id=author_id)

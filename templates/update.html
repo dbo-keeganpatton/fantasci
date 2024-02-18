@@ -4,13 +4,15 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/update.css') }}">
 
 {% block head %}
-<title> FantaSci </title>
+<title> BranchLibrary </title>
 {% endblock %}
 
 
 {% block body %}
 <div style="text-align: center;">
 	<h1 style="text-align: center;">Update Story</h1>
+
+	<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 	
 	<div>
 		<form action="/update/{{ story.id }}" method="POST">
@@ -23,6 +25,16 @@
 			
 			<div class="text_form">
 			<textarea type="text" name="content" title="Change Story" id="content">{{ story.content }}</textarea>
+			
+			<!-- Initialize CKEditor -->
+			<script>CKEDITOR.replace('content', {
+				width: '100%',
+				height: '84%',
+				resize_enabled: false,
+				contentsCss: '{{ url_for("static", filename="css/text_editor.css") }}'
+			});
+			</script>
+
 			</div>
 			
 			<input class="submit_story" type="submit" value="Update">

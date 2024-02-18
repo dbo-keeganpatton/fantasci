@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
-<title> FantaSci </title>
+<title> Branch Library </title>
 
 {% block body %}
 	{% if current_user.is_authenticated %}
@@ -15,7 +15,7 @@
 		</em>
 		</div>
 		<a href="/logout/" class="button">Logout User</a><br>
-		<h1>Welcome to FantaSci!</h1>
+		<h1>Welcome to BranchLibrary!</h1>
 
 	{% else %}
 
@@ -24,7 +24,7 @@
 	</div>
 		<a href="/login/" class="button">Login</a><br>	
 		<a href="/register/" class="button">Create Account</a><br>
-		<h1>Welcome to FantaSci!</h1>
+		<h1>Welcome to BranchLibrary!</h1>
 	
 	{% endif %}
 	
@@ -33,7 +33,7 @@
 	
 	<div class="center-container">
 		<p>
-		 Fantasci aims to change the way we tell stories, 
+		 BranchLibrary aims to change the way we tell stories, 
 		 We believe collective creativity is the cornerstone 
 		 for innovation.
 		 <br><br> 

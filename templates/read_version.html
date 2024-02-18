@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/read_version.css') }}">
 
 {% block head %}
-<title> FantaSci/{{story.title}} </title>
+<title> StoryBranch/{{story.title}} </title>
 {% endblock %}
 
 
@@ -25,7 +25,7 @@
 	<!-- Story Body and Title -->
 	<table class="center-table">
 		<tr>
-			<td>{{ version.content }}</td>
+			<td>{{ version.content|safe }}</td>
 		</tr>  
 	</table>
 </div>

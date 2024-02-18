@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/story_db.css') }}">
 
 {% block head %}
-<title> FantaSci/Compendium </title>
+<title> Library </title>
 {% endblock %}
 
 
@@ -35,7 +35,7 @@
 
 
 <div class="content">
-	<h1 style="text-align: center;">FantaSci Compendium</h1><br>
+	<h1 style="text-align: center;">Library</h1><br>
 
 	<!-- If there are no Stories yet, this prompts the user to return to Index.html -->
 	{% if stories|length < 1 %}
@@ -82,9 +82,15 @@
 		
 				<a href="/versions/{{ story.id }}">Versions</a>
 				<br>
-				<a href="/delete/{{ story.id }}">Delete</a>
-				<br>
 				<a href="/update/{{ story.id }}">Update</a>
+				<br>
+				<br>
+				<a href="/delete/{{ story.id }}" onclick="return confirmDelete();">Delete</a>
+				<script>
+					function confirmDelete() {
+						return confirm('Are you sure you want to delete this entry?');
+					}
+				</script>
 			
 			</td>
 		</tr>  
