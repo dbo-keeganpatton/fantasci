@@ -68,6 +68,9 @@ class NewStory(db.Model):
 
     current_version = db.relationship('NewVersion', foreign_keys=[current_version_id], post_update=True)
     versions = db.relationship('NewVersion', backref='story', lazy=True, foreign_keys='NewVersion.story_id')
+    
+    # This relationship is to assist with User Directory
+    # user_list = db.relationship('User', backref=db.backref('stories', lazy=True))
 
     def __repr__(self):
         return '<new_story %r>' % self.id
@@ -96,7 +99,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
-
+    stories = db.relationship('NewStory', backref='author', lazy=True, foreign_keys=[NewStory.author_id])
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder" : "Username"})
@@ -295,6 +298,27 @@ def versions(id):
     story = NewStory.query.get_or_404(id)
     versions = NewVersion.query.filter_by(story_id=id).order_by(NewVersion.date_created.desc()).all()
     return render_template('versions.html', story=story, versions=versions, current_user=current_user)
+
+
+###################################################
+#               User Directory View               # 
+###################################################
+
+@app.route('/user_dir/', methods=['GET'])
+def user_dir():
+    '''List of Registered'''
+    
+    users_in_dir = User.query.join(NewStory, User.id == NewStory.author_id).all()
+    return  render_template('user_dir.html', users=users_in_dir)
+
+
+@app.route('/user_dir_stories/<int:user_id>/', methods=['GET'])
+def user_dir_stories(user_id):
+    '''stories users wrote'''
+   
+    user = User.query.get_or_404(user_id)
+    stories = NewStory.query.filter_by(author_id=user_id).all()
+    return  render_template('user_dir_stories.html', user=user, stories=stories)
 
 
 

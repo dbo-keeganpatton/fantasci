@@ -1,4 +1,4 @@
-# FantaSci Project
+# BranchLibrary Project
 
 *Ongoing project to create a site where users can collaborate with collective storytelling in an open source style of contribution.*
 
@@ -15,8 +15,10 @@
 	- ~~Content Version Directory.~~
 
 2) __Community Features__
-	- Active User Account directory.
-	- Integrated Instant Message system.
+	- Active User Account directory[WIP].
+	    |- Added Directory of Users.
+        | |- Added list of Stories by user.
+    - Integrated Instant Message system.
 	- Contribution Point System.
 
 3) __Text Editor UX__
