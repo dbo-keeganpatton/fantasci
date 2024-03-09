@@ -53,4 +53,20 @@ th {
 	color: #FD9891;
 }
 
+.view_stories {
+	color: #CF6679;
+	background-color: #1E1E2E;
+	text-decoration: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 24px;
+	cursor: pointer;
+
+}
+
+.view_stories:hover {
+	background-color: #2A2A3B;	
+}
 
