@@ -20,10 +20,18 @@
 		<a href="/" class="return-to-bar">Return To The Bar</a>
 	</div>
 	<div>
+		<a href="/user_dir/" class="button">Author Directory</a>
+	</div>
+	<div>
 		<a href="/story_db/" class="button">Return To Stories</a>
 	</div>
 
-
+{% if current_user.is_authenticated %}
+	<div style = "text-align: center;">
+		<a href="/update/{{ story.id }}" class="view_stories">Fork Story</a>
+		<br><br><br>
+	</div>
+{% endif %}
 	<!-- Story Body and Title -->
 	<table class="center-table">
 		<tr>
