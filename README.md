@@ -16,8 +16,9 @@
 
 2) __Community Features__
 	- Active User Account directory[WIP].
-	    |- Added Directory of Users.
-        | |- Added list of Stories by user.
+	    - ~~Added Directory of Users.~~
+        - ~~Added list of Stories by user.~~
+        - Add Search Functionality
     - Integrated Instant Message system.
 	- Contribution Point System.
 
