@@ -45,11 +45,15 @@ migrate = Migrate(app, db)
 """ 
 Migrate for running Database Migrations when Schemas Change
 run the following commands in terminal when this is neccesary
-    |-- flask db init
-    ||-- flask db upgrade -m 'some message'
-    |||-- flask db upgrade
+|--export FLASK_APP=main.py
+||-- flask db init
+|||-- flask db upgrade -m 'some message'
+||||-- flask db upgrade
 """ 
 
+###################################################
+#               Core Story Entries                #
+###################################################
 
 class NewStory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -94,6 +98,24 @@ class NewVersion(db.Model):
     def __repr__(self):
         return '<new_version %r>' % self.id
 
+
+class MergingRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    story_id = db.Column(db.Integer, db.ForeignKey('new_story.id'), nullable=False)
+    version_id = db.Column(db.Integer, db.ForeignKey('new_version.id'), nullable=False) 
+    requestor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
+    status = db.Column(db.String(20), default='Pending', nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow())
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow(), onupdate = datetime.utcnow())
+
+    # Relationships
+    story = db.relationship('NewStory', backref=backref('merging_requests', lazy=True))
+    version = db.relationship('NewVersion', backref=backref('merging_requests', uselist=False))
+    requestor = db.relationship('User', backref=backref('merging_requests', lazy=True))
+
+###################################################
+#               User Schemas                      #
+###################################################
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -255,8 +277,9 @@ def delete(id):
     except:
         "Something is Wrong..."
 
-
+import traceback
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
+@login_required
 def update(id):
     '''Update Post'''
 
@@ -273,12 +296,27 @@ def update(id):
         try:
             db.session.add(new_version)
             db.session.commit()
+                
+            # Merge request functionality
+            initiate_merge = request.form.get('initiate_merge_request') == 'true'
+            if initiate_merge:
+                merge_request = MergingRequest(
+
+                    story_id=id,
+                    version_id=new_version.id,
+                    requestor_id=current_user.id,
+                    status='Pending'
+                )
+
+                db.session.add(merge_request)
+                db.session.commit()
+
             return redirect('/story_db/')
         
         except Exception as e:
             db.session.rollback()
-            flash(str(e))
-   
+            details = traceback.format_exc()
+            print(details)
     else:
         return render_template('update.html', story=story, current_user=current_user)
 
@@ -319,7 +357,6 @@ def user_dir_stories(user_id):
     user = User.query.get_or_404(user_id)
     stories = NewStory.query.filter_by(author_id=user_id).all()
     return  render_template('user_dir_stories.html', user=user, stories=stories)
-
 
 
 ###################################################

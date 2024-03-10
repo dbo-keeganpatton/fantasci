@@ -32,11 +32,14 @@
 
 	
 	<table class="center-table">
-		
+		<th>Title</th>
+		<th>Genre</th>
+		<th>Created</th>
 		<!-- This lists the stories a user has written -->		
 		{% for story in stories %}
 		<tr>
 			<td><a href="{{ url_for('view_story', id=story.id) }}" class="story-link">{{ story.title }}</a></td>
+			<td>{{ story.genre }}</td>	
 			<td>{{ story.date_created.date() }}</td>
 		{% endfor %}
 		</tr>  

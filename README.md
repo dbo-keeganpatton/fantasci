@@ -9,9 +9,12 @@
 
 ## Backlog:
 1) __Version Control System__
-	- Pull Request system for content merges.
 	- Fork Difference Comparison Summary.
-	- ~~Schema for Forked Content.~~
+	- ~~Pull Request system for content merges.~~
+        - added database schema for PR req.
+        - Altered "UPDATE" route in main.py to faciliate PR.
+        - Altered Update.html to show checkbox for PR.
+    - ~~Schema for Forked Content.~~
 	- ~~Content Version Directory.~~
 
 2) __Community Features__
@@ -27,3 +30,12 @@
 	- ~~Style Customization.~~
 	- User Themes.
 	- Intellisense for text.
+
+4) __General UX__
+    - Improve routing when login, update or any other partial navigation occurs.
+        - Currently users typically are routed back to index, instead route to last location prior to action.
+
+
+## Known Bugs:
+1) ~~__Non Logged in Users can Attempt to edit a Story__~~
+

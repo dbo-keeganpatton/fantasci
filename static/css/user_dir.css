@@ -32,6 +32,15 @@ a {
 	width: 25%;
 }
 
+
+.user-table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 10%;
+}
+
+
+
 td {
 	background-color: #1e1e2e;
 	color: #636d83;
