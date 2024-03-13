@@ -9,11 +9,17 @@
 
 ## Backlog:
 1) __Version Control System__
+    - Make Delete action be exclusive to content owner.
 	- Fork Difference Comparison Summary.
-	- ~~Pull Request system for content merges.~~
-        - added database schema for PR req.
-        - Altered "UPDATE" route in main.py to faciliate PR.
-        - Altered Update.html to show checkbox for PR.
+	- Pull Request system for content merges[WIP].
+        - PR GUI HTML & CSS Format
+            - Checkbox System
+            - Table List
+            - Theme Consistency
+        - ~~Add PR Route to app file.~~
+        - ~~added database schema for PR req.~~
+        - ~~Altered "UPDATE" route in main.py to faciliate PR.~~
+        - ~~Altered Update.html to show checkbox for PR.~~
     - ~~Schema for Forked Content.~~
 	- ~~Content Version Directory.~~
 
@@ -24,7 +30,7 @@
         - Add Search Functionality
     - Integrated Instant Message system.
 	- Contribution Point System.
-
+    
 3) __Text Editor UX__
 	- ~~Font Selection for Editing.~~
 	- ~~Style Customization.~~
