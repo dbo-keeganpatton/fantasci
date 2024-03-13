@@ -13,9 +13,12 @@
 		<em style = "color: #636d83; font-size: 22px; font-family: sans-serif;" >
 			Welcome, {{ current_user.username }}!
 		</em>
-		</div>
+	</div>
+	
 		<a href="/logout/" class="button">Logout User</a><br>
 		<a href="/user_dir/" class="button">Author Directory</a><br>
+		<a href="/merge_requests/" class="button">Pending Merge Requests</a>
+
 	<h1>Welcome to BranchLibrary!</h1>
 
 	{% else %}

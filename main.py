@@ -360,6 +360,23 @@ def user_dir_stories(user_id):
 
 
 ###################################################
+#           Version Control System Routes         # 
+###################################################
+
+@app.route('/merge_requests/', methods=['GET'])
+@login_required
+def view_merge_requests():
+    '''Show User PR Req'''
+
+    merge_requests = MergingRequest.query.join( NewStory, MergingRequest.story_id == NewStory.id).filter(
+        NewStory.author_id == current_user.id,
+        MergingRequest.status == "Pending").all()
+
+    return render_template('merge_requests.html', merge_requests=merge_requests)
+
+
+
+###################################################
 #                     END APP                     # 
 ###################################################
 
