@@ -4,13 +4,6 @@ body {
 	font-size: 20px;
 }
 
-h4 {
-	font-size: 28px;
-	color: #636d83;
-	text-align: center;
-	font-family: sans-serif;
-}
-
 h1 {
 	font-size: 36px;
 	color: #B3DF72;
@@ -26,20 +19,12 @@ a {
 }
 
 
-.center-table {
+
+.versions-table {
 	margin-left: auto;
 	margin-right: auto;
-	width: 25%;
+	width: 40%;
 }
-
-
-.user-table {
-	margin-left: auto;
-	margin-right: auto;
-	width: 10%;
-}
-
-
 
 td {
 	background-color: #1e1e2e;
@@ -47,7 +32,7 @@ td {
 	font-family: sans-serif;
 	font-size: 20px;
 	text-align: center;
-	padding: 10;
+	padding: 10px;
 }
 
 th {
@@ -56,7 +41,7 @@ th {
 	font-family: sans-serif;
 	font-size: 20px;
 	text-align: center;
-	padding: 10;
+	padding: 15px;
 }
 
 .story-link {
@@ -67,26 +52,5 @@ th {
 .return-to-bar {
 	/* hyperlink to return to index */
 	color: #FD9891;
-}
-
-.form-cont {
-	display: flex;
-	justify-content: center; 
-	align-items: center; 
-	margin: 0 auto; 
-	width: 100%;
-}
-
-.form-input {
-	height: auto;
-	width: auto;
-	margin: 10;
-	color: #636d83;
-	font-size: 16px;
-	font-family: sans-serif;
-	border-radius: 10px;
-	border-color: #1e1e2e;
-	background: #1e1e2e;
-	padding: 10;
 }
 
