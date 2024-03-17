@@ -374,6 +374,21 @@ def view_merge_requests():
 
     return render_template('merge_requests.html', merge_requests=merge_requests)
 
+@app.route('/review_changes/<int:version_id>', methods=['GET', 'POST'])
+def review_changes(version_id):
+    '''Review Merge Req Version'''
+
+    version = NewVersion.query.get_or_404(version_id)
+    story = version.story
+    
+    if request.method == "POST":
+        story.content = version.content 
+        db.session.commit()
+        return redirect('/')
+
+
+    return render_template('review_changes.html', version=version, story=story)
+
 
 
 ###################################################

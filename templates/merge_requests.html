@@ -29,7 +29,7 @@
 	<tr>
 		<td>{{ request.story.title }}</td>
 		<td>{{ request.requestor.username }}</td>
-		<td><a href="{{ url_for('read_version', version_id=request.version_id) }}" class="story-link">Review Changes</a></td>
+		<td><a href="{{ url_for('review_changes', version_id=request.version_id) }}" class="story-link">Review Changes</a></td>
 	</tr>
 	{% endfor %}
 </table>

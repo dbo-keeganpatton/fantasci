@@ -1,0 +1,41 @@
+<!-- 
+	This Template is to review a version that is requesting a merge on original.
+-->
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/review_changes.css') }}">
+
+{% block head %}
+<title> StoryBranch/{{story.title}} </title>
+{% endblock %}
+
+
+
+{% block body %}
+
+
+	<!-- Routing Buttons -->
+	<a href="/story_db/" class="button">Return To Stories</a>
+	<br>
+	<a href="/" class="return-to-bar">Return To The Bar</a>
+	<br>
+	<a href="/user_dir/" class="button">Author Directory</a>
+	<h1 style="text-align: center;">{{ story.title }}</h1>
+	
+<div class="content">
+	
+	<div class="accept-changes-d">
+		<form action="{{ url_for('review_changes', version_id=version.id) }}" method="post">
+			<input type="submit" value="Accept Changes" class="accept-changes">
+		</form>
+	</div>
+
+
+	<!-- Story Body and Title -->
+	<table class="center-table">
+		<tr>
+			<td>{{ version.content|safe }}</td>
+		</tr>  
+	</table>
+</div>
+{% endblock %}
+
