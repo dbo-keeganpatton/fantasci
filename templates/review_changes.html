@@ -14,9 +14,9 @@
 
 
 	<!-- Routing Buttons -->
-	<a href="/story_db/" class="button">Return To Stories</a>
-	<br>
 	<a href="/" class="return-to-bar">Return To The Bar</a>
+	<br>
+	<a href="/story_db/" class="button">Return To Stories</a>
 	<br>
 	<a href="/user_dir/" class="button">Author Directory</a>
 	<h1 style="text-align: center;">{{ story.title }}</h1>
@@ -25,7 +25,8 @@
 	
 	<div class="accept-changes-d">
 		<form action="{{ url_for('review_changes', version_id=version.id) }}" method="post">
-			<input type="submit" value="Accept Changes" class="accept-changes">
+			<input type="submit" name="action" value="Accept Changes" class="accept-changes">
+			<input type="submit" name="action" value="Deny Changes" class="accept-changes">
 		</form>
 	</div>
 

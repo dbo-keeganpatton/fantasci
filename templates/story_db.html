@@ -6,6 +6,14 @@
 -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/story_db.css') }}">
 
+ <!-- This function is used for the delete function in the table below -->
+<script>
+	function confirmDelete() {
+		return confirm('Are you sure you want to delete this entry?');
+	}
+</script>
+
+
 {% block head %}
 <title> Library </title>
 {% endblock %}
@@ -50,7 +58,6 @@
 	
 	{% else %}
 	
-
 	
 	<!-- This is just for a Genre filter Dropdown -->
 	<div class = "form-cont">
@@ -89,16 +96,13 @@
 				<br>
 				<a href="/update/{{ story.id }}">Update</a>
 				<br>
+				{% if story.author_id == current_user.id %}
+				<a href="/delete/{{ story.id }}" onclick="return confirmDelete();" class="return-to-bar">Delete</a>
+				{% endif %}
 				<br>
-				<a href="/delete/{{ story.id }}" onclick="return confirmDelete();">Delete</a>
-				<script>
-					function confirmDelete() {
-						return confirm('Are you sure you want to delete this entry?');
-					}
-				</script>
-			
 			</td>
 		</tr>  
+
 		{% endfor %}
 	
 	</table>

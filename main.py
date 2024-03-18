@@ -12,7 +12,7 @@ from datetime import datetime
 from flask_bcrypt import Bcrypt
 import json
 import bleach
-
+import traceback
 
 # Retrieve Auth Secret
 with open('secret.json', 'r') as file:
@@ -36,9 +36,10 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-###################################################
-#               Database Schemas                  #
-###################################################
+
+#############################################################################################################################################
+"""                                                         DATABASE SCHEMAS                                                              """
+#############################################################################################################################################
 
 migrate = Migrate(app, db)
 
@@ -113,6 +114,8 @@ class MergingRequest(db.Model):
     version = db.relationship('NewVersion', backref=backref('merging_requests', uselist=False))
     requestor = db.relationship('User', backref=backref('merging_requests', lazy=True))
 
+
+
 ###################################################
 #               User Schemas                      #
 ###################################################
@@ -122,6 +125,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     stories = db.relationship('NewStory', backref='author', lazy=True, foreign_keys=[NewStory.author_id])
+
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder" : "Username"})
@@ -141,6 +145,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+
+#############################################################################################################################################
+"""                                                             ROUTES                                                                    """
+#############################################################################################################################################
+
+
 ###################################################
 #                 Login Routes                    #
 ###################################################
@@ -148,15 +158,13 @@ class LoginForm(FlaskForm):
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
-    
+    '''First Time Register'''
     form = RegisterForm()
-    
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         new_user = User(username=form.username.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        
         return redirect('/')
 
     return render_template('register.html', form=form)
@@ -165,9 +173,8 @@ def register():
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    
+    '''Central Login'''
     form = LoginForm()
-    
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
@@ -176,6 +183,7 @@ def login():
                 return redirect('/')
 
     return render_template('login.html', form=form)
+
 
 
 @app.route('/logout/', methods=['GET', 'POST'])
@@ -192,8 +200,8 @@ def logout():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     '''Landing Page / Mission Statement'''
-
     return render_template('index.html', current_user=current_user)
+
 
 
 ###################################################
@@ -206,7 +214,6 @@ def writer():
     if request.method == 'POST':
         
         story_title = request.form['title']
-        
         # Bleach is used here to clean allowable HTML tags for security.
         story_content = bleach.clean( 
             request.form['content'], tags=list(
@@ -215,7 +222,6 @@ def writer():
             [ 'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'blockquote' ], 
             strip=True
         )
-
         story_genre = request.form['genre']
         author_id = current_user.id
         add_story = NewStory(title=story_title, content=story_content, genre=story_genre, author_id=author_id)
@@ -234,16 +240,15 @@ def writer():
         return render_template('writer.html', stories=stories, current_user=current_user)
 
 
+
 ###################################################
-#           Story Repo and CRUD actions           #
+#           Story Repo and Reading Routes         #
 ###################################################
 
 @app.route('/story_db/', methods=['GET', 'POST'])
 def story_db():
     '''View Created Stories'''
-    
     stories = NewStory.query.order_by(NewStory.date_created).all()
-    
     #### This helps create a genre dropdown filter for the db template ####
     unique_genres = set(story.genre for story in stories)
     if request.method == "POST":
@@ -251,23 +256,35 @@ def story_db():
         if select_genre and select_genre != 'ALL':
             stories = [story for story in stories if story.genre == select_genre]
 
-
     return render_template('story_db.html', stories=stories, unique_genres=unique_genres, current_user=current_user)
+
 
 
 @app.route('/read_version/<int:version_id>', methods=['GET'])
 def read_version(version_id):
     '''Review Version from Version list'''
-
     version = NewVersion.query.get_or_404(version_id)
     story = version.story
     return render_template('read_version.html', version=version, story=story)
 
 
+
+@app.route('/viewstory/<int:id>', methods=['GET'])
+def view_story(id):
+    '''Hyperlink to Select Story'''
+    story = NewStory.query.get_or_404(id)
+    return render_template('view_story.html', story=story, current_user=current_user)
+
+
+
+###################################################
+#                  CRUD actions                   #
+###################################################
+
+
 @app.route('/delete/<int:id>')
 def delete(id):
     '''Delete Posts'''
-
     story_to_delete = NewStory.query.get_or_404(id)
 
     try:
@@ -277,14 +294,13 @@ def delete(id):
     except:
         "Something is Wrong..."
 
-import traceback
+
+
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update(id):
     '''Update Post'''
-
     story = NewStory.query.get_or_404(id)
-
     if request.method == 'POST':
         
         new_version = NewVersion(
@@ -296,12 +312,10 @@ def update(id):
         try:
             db.session.add(new_version)
             db.session.commit()
-                
             # Merge request functionality
             initiate_merge = request.form.get('initiate_merge_request') == 'true'
             if initiate_merge:
                 merge_request = MergingRequest(
-
                     story_id=id,
                     version_id=new_version.id,
                     requestor_id=current_user.id,
@@ -310,7 +324,6 @@ def update(id):
 
                 db.session.add(merge_request)
                 db.session.commit()
-
             return redirect('/story_db/')
         
         except Exception as e:
@@ -321,22 +334,6 @@ def update(id):
         return render_template('update.html', story=story, current_user=current_user)
 
 
-@app.route('/viewstory/<int:id>', methods=['GET'])
-def view_story(id):
-    '''Hyperlink to Select Story'''
-    
-    story = NewStory.query.get_or_404(id)
-    return render_template('view_story.html', story=story, current_user=current_user)
-
-
-@app.route('/versions/<int:id>', methods=['GET'])
-def versions(id):
-    '''Version History for Changes to a Story'''
-    
-    story = NewStory.query.get_or_404(id)
-    versions = NewVersion.query.filter_by(story_id=id).order_by(NewVersion.date_created.desc()).all()
-    return render_template('versions.html', story=story, versions=versions, current_user=current_user)
-
 
 ###################################################
 #               User Directory View               # 
@@ -345,48 +342,66 @@ def versions(id):
 @app.route('/user_dir/', methods=['GET'])
 def user_dir():
     '''List of Registered'''
-    
     users_in_dir = User.query.join(NewStory, User.id == NewStory.author_id).all()
     return  render_template('user_dir.html', users=users_in_dir)
+
 
 
 @app.route('/user_dir_stories/<int:user_id>/', methods=['GET'])
 def user_dir_stories(user_id):
     '''stories users wrote'''
-   
     user = User.query.get_or_404(user_id)
     stories = NewStory.query.filter_by(author_id=user_id).all()
     return  render_template('user_dir_stories.html', user=user, stories=stories)
+
 
 
 ###################################################
 #           Version Control System Routes         # 
 ###################################################
 
+@app.route('/versions/<int:id>', methods=['GET'])
+def versions(id):
+    '''Version History for Changes to a Story'''
+    story = NewStory.query.get_or_404(id)
+    versions = NewVersion.query.filter_by(story_id=id).order_by(NewVersion.date_created.desc()).all()
+    return render_template('versions.html', story=story, versions=versions, current_user=current_user)
+
+
+
 @app.route('/merge_requests/', methods=['GET'])
 @login_required
 def view_merge_requests():
     '''Show User PR Req'''
-
     merge_requests = MergingRequest.query.join( NewStory, MergingRequest.story_id == NewStory.id).filter(
         NewStory.author_id == current_user.id,
         MergingRequest.status == "Pending").all()
-
     return render_template('merge_requests.html', merge_requests=merge_requests)
 
+
+
+# This route is slightly more complicated.
 @app.route('/review_changes/<int:version_id>', methods=['GET', 'POST'])
 def review_changes(version_id):
     '''Review Merge Req Version'''
-
+    # Retrieve version to replace original.
     version = NewVersion.query.get_or_404(version_id)
     story = version.story
     
     if request.method == "POST":
-        story.content = version.content 
-        db.session.commit()
-        return redirect('/')
+        # The HTML template uses "action" buttons with corresponding aliases.
+        # Get the merge request ID so we can delete it after it has been seen and approved or denied.
+        action = request.form.get('action')
+        merging_requests = MergingRequest.query.filter_by(version_id=version.id).first()
 
-
+        if action == "Accept Changes":
+            story.content = version.content 
+        elif action == "Deny Changes":
+            flash("Merge Denied", "Info")
+        if merging_requests:
+            db.session.delete(merging_requests)
+            db.session.commit()
+        return redirect('/merge_requests/')
     return render_template('review_changes.html', version=version, story=story)
 
 

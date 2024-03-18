@@ -9,25 +9,26 @@
 
 ## Backlog:
 1) __Version Control System__
-    - Make Delete action be exclusive to content owner.
 	- Fork Difference Comparison Summary.
-	- Pull Request system for content merges[WIP].
-        - PR GUI HTML & CSS Format
-            - Checkbox System
-            - Table List
-            - Theme Consistency
+	- ~~Pull Request system for content merges.~~
+        - ~~PR GUI HTML & CSS Format~~
+            - ~~Checkbox System~~
+            - ~~Table List~~
+            - ~~Theme Consistency~~
         - ~~Add PR Route to app file.~~
         - ~~added database schema for PR req.~~
         - ~~Altered "UPDATE" route in main.py to faciliate PR.~~
         - ~~Altered Update.html to show checkbox for PR.~~
     - ~~Schema for Forked Content.~~
 	- ~~Content Version Directory.~~
+    - ~~Make Delete action be exclusive to content owner.~~
 
 2) __Community Features__
-	- Active User Account directory[WIP].
+    - Create Account Deletion Functionality.
+    - Active User Account directory[WIP].
+        - Add Search Functionality
 	    - ~~Added Directory of Users.~~
         - ~~Added list of Stories by user.~~
-        - Add Search Functionality
     - Integrated Instant Message system.
 	- Contribution Point System.
     
@@ -40,8 +41,8 @@
 4) __General UX__
     - Improve routing when login, update or any other partial navigation occurs.
         - Currently users typically are routed back to index, instead route to last location prior to action.
-
+    - When User creates new account, login new acct automatically, rather than require follow up login.
 
 ## Known Bugs:
 1) ~~__Non Logged in Users can Attempt to edit a Story__~~
-
+2) Delete action in Story list does not work.
