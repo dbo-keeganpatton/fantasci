@@ -48,4 +48,4 @@
 
 ## Known Bugs:
 1) ~~__Non Logged in Users can Attempt to edit a Story__~~
-2) Delete action in Story list does not work.
+2) ~~Delete action in Story list does not work.~~
