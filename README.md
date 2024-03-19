@@ -9,12 +9,12 @@
 
 
 ## System for Collaboration
-    One of the main features I am attempting to implement is a version control system similar to how we might use something such as github
+One of the main features I am attempting to implement is a version control system similar to how we might use something such as github
 to collaborate on software projects. The idea being that a user can author a short story, and another user, or group of users can "fork"
 that original content and add changes of their own. They then have the option to submit a request to the original owner of the content to 
 "merge" these changes, similar to a PR in a git workflow. 
 
-    Currently this is a straight replace of the content if the merge is approved, I plan to implement a comparison functinoality that can allow
+Currently this is a straight replace of the content if the merge is approved, I plan to implement a comparison functinoality that can allow
 the original content's owner to easily see what has changed and make a more educated decision on wether to approve or deny a request. It is my 
 hope that this system will be further built upon as I examine it's flaws in the future. This is the cornerstone of what this app is about.
 
