@@ -52,6 +52,11 @@ run the following commands in terminal when this is neccesary
 ||||-- flask db upgrade
 """ 
 
+""" Database Notes """
+# Deleting a story from the 'NewStory' class will remove all subsequent Versions and Merge Requests for that story.
+# This is intended functionality until a more elegant solution is created.
+
+
 ###################################################
 #               Core Story Entries                #
 ###################################################
@@ -72,10 +77,7 @@ class NewStory(db.Model):
     )
 
     current_version = db.relationship('NewVersion', foreign_keys=[current_version_id], post_update=True)
-    versions = db.relationship('NewVersion', backref='story', lazy=True, foreign_keys='NewVersion.story_id')
-    
-    # This relationship is to assist with User Directory
-    # user_list = db.relationship('User', backref=db.backref('stories', lazy=True))
+    versions = db.relationship('NewVersion', backref='story', lazy=True, cascade='all, delete-orphan', foreign_keys='NewVersion.story_id')
 
     def __repr__(self):
         return '<new_story %r>' % self.id
@@ -110,10 +112,9 @@ class MergingRequest(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow(), onupdate = datetime.utcnow())
 
     # Relationships
-    story = db.relationship('NewStory', backref=backref('merging_requests', lazy=True))
+    story = db.relationship('NewStory', backref=backref('merging_requests', cascade='all, delete', lazy=True))
     version = db.relationship('NewVersion', backref=backref('merging_requests', uselist=False))
     requestor = db.relationship('User', backref=backref('merging_requests', lazy=True))
-
 
 
 ###################################################
@@ -287,12 +288,12 @@ def delete(id):
     '''Delete Posts'''
     story_to_delete = NewStory.query.get_or_404(id)
 
-    try:
-        db.session.delete(story_to_delete)
-        db.session.commit()
-        return redirect('/story_db/')
-    except:
-        "Something is Wrong..."
+   # try:
+    db.session.delete(story_to_delete)
+    db.session.commit()
+    return redirect('/story_db/')
+    #except:
+     #   Exception 
 
 
 

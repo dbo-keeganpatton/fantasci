@@ -4,6 +4,9 @@
 
 ![Mission Statement](main.png)
 
+## Current Database Schema
+![DB Model](db_model.png)
+
 *Below are the backlog ToDo's for desired features.*
 
 
