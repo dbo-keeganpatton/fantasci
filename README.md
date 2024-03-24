@@ -1,11 +1,8 @@
 # BranchLibrary Project
 
-*Ongoing project to create a site where users can collaborate with collective storytelling in an open source style of contribution.*
+__An ongoing project to create a platform where users can collaborate with collective storytelling in an open source style of contribution.__
 
 ![Mission Statement](main.png)
-
-## Current Database Schema
-![DB Model](db_model.png)
 
 
 ## System for Collaboration
@@ -18,7 +15,12 @@ Currently this is a straight replace of the content if the merge is approved, I 
 the original content's owner to easily see what has changed and make a more educated decision on whether to approve or deny a request. It is my 
 hope that this system will be further built upon as I examine it's flaws in the future. This is the cornerstone of what this app is about.
 
+## Version Control System Sequence
+![Version Control Sequence](version_ctrl.png)
 
+
+## Current Database Schema
+![DB Model](db_model.png)
 
 ## Backlog:
 *Below are the backlog ToDo's for desired features.*
@@ -40,7 +42,7 @@ hope that this system will be further built upon as I examine it's flaws in the 
 
 2) __Community Features__
     - Create Account Deletion Functionality.
-    - Active User Account directory[WIP].
+    - Active User Account directory [WIP].
         - Add Search Functionality
 	    - ~~Added Directory of Users.~~
         - ~~Added list of Stories by user.~~
