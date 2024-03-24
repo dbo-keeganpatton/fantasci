@@ -413,4 +413,4 @@ def review_changes(version_id):
 
 # add with app.app_context(): db.create_all() if needed.
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
