@@ -13,11 +13,14 @@ from flask_bcrypt import Bcrypt
 import json
 import bleach
 import traceback
+import os
 
 # Retrieve Auth Secret
-with open('secret.json', 'r') as file:
-    secret = json.load(file)
+# with open('secret.json', 'r') as file:
+#    secret = json.load(file)
 
+# Retrieve secret upon deployment
+secret = os.getenv('secret')
 
 # Just the basic setup stuff
 app = Flask(__name__)
